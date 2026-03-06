@@ -1,8 +1,9 @@
 services:
   - type: web
-    name: elective-selection-system
+    name: elective-guidance-system
     env: node
     plan: free
+    rootDir: major_project
     buildCommand: npm install && npm run build
     startCommand: node simple-server.cjs
     envVars:
