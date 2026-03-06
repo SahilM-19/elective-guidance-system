@@ -15,3 +15,5 @@ services:
         sync: false
       - key: PORT
         value: 5000
+      - key: FRONTEND_URL
+        value: https://elective-guidance-system-wiri.onrender.com
