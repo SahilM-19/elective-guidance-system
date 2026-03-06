@@ -1,7 +1,7 @@
 // API Base URL - Properly configured for all environments
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 
   (import.meta.env.MODE === 'production' 
-    ? 'https://elective-guidance-system-wlri.onrender.com/api' 
+    ? '/api' 
     : 'http://localhost:5001/api');
 console.log('🌐 API_BASE_URL configured as:', API_BASE_URL, 'Mode:', import.meta.env.MODE);
 
