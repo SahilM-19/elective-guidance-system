@@ -197,15 +197,15 @@ const AdminSystemStatus: React.FC = () => {
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Departmental:</span>
-                <span>{electives.filter(e => e.category === 'Departmental').length}</span>
+                <span>{electives.filter(e => e.category.includes('Departmental')).length}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Open:</span>
-                <span>{electives.filter(e => e.category === 'Open').length}</span>
+                <span>{electives.filter(e => e.category.includes('Open')).length}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Humanities:</span>
-                <span>{electives.filter(e => e.category === 'Humanities').length}</span>
+                <span>{electives.filter(e => e.category.includes('Humanities')).length}</span>
               </div>
             </div>
           </div>

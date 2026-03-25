@@ -120,9 +120,9 @@ const PreviousElectiveFeedback: React.FC<PreviousElectiveFeedbackProps> = ({
                 </p>
               </div>
               <span className={`px-2 py-1 rounded-full text-xs font-medium text-white ${
-                previousElective.category === 'Practical' ? 'bg-orange-500' : 'bg-blue-500'
+                previousElective.subjectType === 'Practical' ? 'bg-orange-500' : 'bg-blue-500'
               }`}>
-                {previousElective.category}
+                {previousElective.subjectType || 'Theory'}
               </span>
             </div>
           </div>

@@ -89,8 +89,8 @@ const ElectiveRecommendation: React.FC<ElectiveRecommendationProps> = ({
     if (elective.description.toLowerCase().includes(preferences.careerGoals.toLowerCase())) score += 2;
     
     // Difficulty preference
-    if (preferences.difficulty === 'easy' && elective.category === 'Theory') score += 1;
-    if (preferences.difficulty === 'challenging' && elective.category === 'Practical') score += 1;
+    if (preferences.difficulty === 'easy' && elective.subjectType === 'Theory') score += 1;
+    if (preferences.difficulty === 'challenging' && elective.subjectType === 'Practical') score += 1;
     
     return score;
   };
@@ -106,11 +106,11 @@ const ElectiveRecommendation: React.FC<ElectiveRecommendationProps> = ({
       reasons.push(`Relevant to your career goal: ${preferences.careerGoals}`);
     }
     
-    if (preferences.difficulty === 'easy' && elective.category === 'Theory') {
+    if (preferences.difficulty === 'easy' && elective.subjectType === 'Theory') {
       reasons.push('Theory-based course suitable for easier learning curve');
     }
     
-    if (preferences.difficulty === 'challenging' && elective.category === 'Practical') {
+    if (preferences.difficulty === 'challenging' && elective.subjectType === 'Practical') {
       reasons.push('Hands-on practical course for challenging experience');
     }
     

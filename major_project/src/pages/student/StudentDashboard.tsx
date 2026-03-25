@@ -13,7 +13,8 @@ const StudentDashboard: React.FC = () => {
 
   const studentElectives = getStudentElectives(user.id);
   const currentSemester = user.semester || 5;
-  const recommendations = getRecommendations(user.id);
+  
+  const recommendations = getRecommendations(user.id, currentSemester);
   
   // Get alerts relevant to the student
   const relevantAlerts = getActiveAlerts(user.department, user.semester);
@@ -180,7 +181,6 @@ const StudentDashboard: React.FC = () => {
                   label={track.name}
                   color={track.color}
                 />
-                <p className="text-sm text-gray-600 mt-1">{track.description}</p>
               </div>
             ))}
           </div>

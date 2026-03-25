@@ -1388,7 +1388,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
         
         console.log('📊 [loadData] Converted students data:', studentsData.length);
         console.log('📊 [Initial Load] Section distribution:', 
-          studentsData.reduce((acc: Record<string, number>, s) => {
+          studentsData.reduce((acc: Record<string, number>, s: Student) => {
             const section = s.section || 'undefined/null';
             acc[section] = (acc[section] || 0) + 1;
             return acc;
@@ -1813,7 +1813,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
         localStorage.setItem('electives', JSON.stringify(updatedElectives));
         return true;
       } else {
-        const errorData = await response.json().catch(() => ({ message: 'Unknown error' }));
+        const errorData = await response.json();
         console.error('Failed to delete elective:', errorData);
         return false;
       }
@@ -2053,7 +2053,20 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const getElectiveDeadline = (electiveId: string): string | null => {
     const elective = electives.find(e => e.id === electiveId);
     // Check both deadline and selectionDeadline for backward compatibility
-    return elective?.deadline || elective?.selectionDeadline || null;
+    
+    let deadlineStr = null;
+    if (elective) {
+      if ('deadline' in elective && elective.deadline) {
+        deadlineStr = String(elective.deadline);
+      } else if (elective.selectionDeadline) {
+        // Need to ensure selectionDeadline is a string to match the return type
+        deadlineStr = typeof elective.selectionDeadline === 'string' 
+          ? elective.selectionDeadline 
+          : String(elective.selectionDeadline);
+      }
+    }
+    
+    return deadlineStr;
   };
 
   const isElectiveSelectionOpen = (electiveId: string): boolean => {
@@ -2210,17 +2223,16 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return true;
   };
 
-  const removeSemester = async (semester: number): Promise<boolean> => {
+  const removeSemester = async (semester: number) => {
     const updatedSemesters = adminSemesters.filter(s => s !== semester);
     setAdminSemesters(updatedSemesters);
     localStorage.setItem('adminSemesters', JSON.stringify(updatedSemesters));
     
-    // Sync with database
+    // Also try to update via system config API if available
     try {
       await systemConfigApi.updateConfig({ semesters: updatedSemesters });
-      console.log('✅ Semester removal synced to database');
-    } catch (error) {
-      console.warn('⚠️ Could not sync semester removal to database:', error);
+    } catch (e) {
+      console.warn('Could not update semesters in backend config', e);
     }
     
     return true;
@@ -2260,11 +2272,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
         name: data.track.name,
         department: data.track.department,
         category: data.track.category,
-        color: track.color || '#3B82F6',
-        suggestedElectives: [],
-        prerequisites: [],
-        careerOutcomes: [],
-        estimatedHours: 0
+        color: track.color || '#3B82F6'
       };
       
       const updatedTracks = [...tracks, newTrack];
@@ -3143,10 +3151,10 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
             };
           });
         
-        console.log('✅ Mapped students:', studentsData.length);
-        console.log('📊 Section distribution:', 
-          studentsData.reduce((acc: any, s: any) => {
-            const section = s.section || 'Not Assigned';
+        console.log('📊 Mapped students:', studentsData.length);
+        console.log('📊 [Initial Load] Section distribution:', 
+          studentsData.reduce((acc: Record<string, number>, s: Student) => {
+            const section = s.section || 'undefined/null';
             acc[section] = (acc[section] || 0) + 1;
             return acc;
           }, {})

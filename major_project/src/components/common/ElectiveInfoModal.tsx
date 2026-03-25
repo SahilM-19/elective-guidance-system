@@ -36,9 +36,9 @@ const ElectiveInfoModal: React.FC<ElectiveInfoModalProps> = ({
               <div className="flex items-center space-x-4 mt-2">
                 <span className="text-gray-600 dark:text-gray-300">{elective.code}</span>
                 <span className={`px-2 py-1 rounded-full text-xs font-medium text-white ${
-                  elective.category === 'Practical' ? 'bg-orange-500' : 'bg-blue-500'
+                  elective.subjectType === 'Practical' ? 'bg-orange-500' : 'bg-blue-500'
                 }`}>
-                  {elective.category}
+                  {elective.subjectType || 'Theory'}
                 </span>
                 <span className="text-gray-600 dark:text-gray-300">
                   {elective.credits} Credits

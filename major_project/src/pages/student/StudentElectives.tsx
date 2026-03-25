@@ -200,10 +200,10 @@ const StudentElectives: React.FC = () => {
                     </div>
                   </div>
                   <span className={`px-2 py-1 rounded-full text-xs text-white ${
-                    elective.category === 'Departmental' ? 'bg-blue-500' :
-                    elective.category === 'Open' ? 'bg-orange-500' : 'bg-purple-500'
+                    elective.category.includes('Departmental') ? 'bg-blue-500' :
+                    elective.category.includes('Open') ? 'bg-orange-500' : 'bg-purple-500'
                   }`}>
-                    {elective.category}
+                    {elective.category.join(', ')}
                   </span>
                 </div>
               );
@@ -265,10 +265,10 @@ const StudentElectives: React.FC = () => {
                         {elective.code ? `${elective.code} • ` : ''}{elective.credits} Credits
                       </span>
                       <span className={`px-2 py-1 rounded-full text-xs text-white ${
-                        elective.category === 'Departmental' ? 'bg-blue-500' :
-                        elective.category === 'Open' ? 'bg-orange-500' : 'bg-purple-500'
+                        elective.category.includes('Departmental') ? 'bg-blue-500' :
+                        elective.category.includes('Open') ? 'bg-orange-500' : 'bg-purple-500'
                       }`}>
-                        {elective.category}
+                        {elective.category.join(', ')}
                       </span>
                     </div>
                     

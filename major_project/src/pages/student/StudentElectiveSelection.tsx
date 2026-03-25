@@ -361,7 +361,7 @@ const StudentElectiveSelection: React.FC = () => {
               // Get the selected elective for this category
               const selectedElective = selectedElectivesThisSemester.find(se => {
                 const elec = electives.find(e => e.id === se.electiveId);
-                return elec?.category.includes(category.id);
+                return elec?.category.includes(category.id as any);
               });
               
               const selectedElectiveData = selectedElective 
