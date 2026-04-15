@@ -87,6 +87,7 @@ const StudentElectiveSelection: React.FC = () => {
   }, [selectedElectivesThisSemester, electives]);
 
   // Fetch elective limits from backend
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(() => {
     const fetchLimits = async () => {
       if (!user || !user.department) return;
@@ -106,7 +107,7 @@ const StudentElectiveSelection: React.FC = () => {
     };
     
     fetchLimits();
-  }, [user, availableCategories, electiveSelectionSemester, getElectiveLimit]);
+  }, [user?.id, user?.department, electiveSelectionSemester]);
 
   if (!user) return null;
 
